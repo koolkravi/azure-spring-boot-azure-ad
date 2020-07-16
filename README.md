@@ -171,8 +171,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 # Step 4: Test 
 ```
 mvn clean package spring-boot:run
-1st application : http://localhost:8080
-2nd application : http://localhost:8090
+1st application : http://localhost:8090
+2nd application : http://localhost:8091
 
 ```
 
