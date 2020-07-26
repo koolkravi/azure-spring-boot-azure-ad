@@ -1,4 +1,4 @@
-# Table Of COntent
+# Table of Content
 
 # 1. oauth-2.0-implicit-code-flow
 
