@@ -196,7 +196,13 @@ Application (client)  ID : ddd-gggg-4195-a4cd-dddddd
 client secret 			 : dddd-K-9FVEZF.PZ~ggggg
 ```
 
-
+# Issues
+1. 
+```
+Login with OAuth 2.0
+[authorization_request_not_found]
+fix :  app registration -> authorization -> Check  ID tokens
+```
 
 # References:
 
@@ -260,3 +266,4 @@ https://docs.microsoft.com/en-us/azure/azure-app-configuration/use-key-vault-ref
 https://www.shardik.com/blog/2020/04/09/azure-properties/
 https://kreuzwerker.de/post/keyvault-with-spring
 ```
+
