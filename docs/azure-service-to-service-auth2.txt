@@ -1,0 +1,121 @@
+# service to service auth 
+
+## A. Service to service auth using client credentials (daemons or service accounts.)
+```
+#Microsoft identity platform and the OAuth 2.0 client credentials flow
+https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow
+https://www.taithienbo.com/implement-oauth2-client-credentials-flow-with-azure-ad-and-microsoft-identity-platform-to-protect-asp-net-core-web-apis/
+```
+```
+     +---------+                                  +---------------+
+     |         |                                  |               |
+     |         |>--(A)- Client Authentication --->| Authorization |
+     | Client  |                                  |     Server    |
+     |         |<--(B)---- Access Token ---------<|               |
+     |         |                                  |               |
+     +---------+                                  +---------------+
+```
+
+
+
+## B. Service to service auth using On-Behalf-Of flow
+```
+https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow
+https://github.com/Azure-Samples/ms-identity-java-webapi
+https://github.com/Azure/azure-sdk-for-java.git
+
+Authentication flows and application scenarios
+https://docs.microsoft.com/en-us/azure/active-directory/develop/authentication-flows-app-scenarios#scenarios-and-supported-authentication-flows
+
+OAuth 2.0 and OpenID Connect protocols on Microsoft identity platform
+https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols
+```
+
+```
+git clone https://github.com/Azure-Samples/ms-identity-java-webapi.git
+
+1. register Java-webapi
+Directory (tenant) ID   : e12c9f8e-ecb3-4cbd-b504-9410ab9116ae
+Application (client) ID : a2b81c39-3095-48c7-8918-7a8e112ea8c2
+secret: 2v.IKn.S51zG.hy.778_9z45F9Z0Mc~bJ3
+
+Expose an API 
+api://a2b81c39-3095-48c7-8918-7a8e112ea8c2
+#api://{clientId}
+
+scope name : access_as_user
+Admin consent display name: Access Java-webapi
+
+User consent display name : Access Java-webapi
+scopes : 
+api://a2b81c39-3095-48c7-8918-7a8e112ea8c2/access_as_user
+#URI api://{clientid}/access_as_user
+
+2. Configure the msal-obo-sample to use your Azure AD tenant
+
+3. Register the client web app (Java_webapp)
+
+name: java_webapp
+Directory (tenant) ID: e12c9f8e-ecb3-4cbd-b504-9410ab9116ae
+Application (client) ID: b01b4114-de39-48b1-af96-84cc1d0e67e3
+redirect URI: https://localhost:8443/msal4jsample/secure/aad
+https://localhost:8443/msal4jsample/graph/me
+app secret : nNIAavm.6GJyKyJi10owCs4yhk.9u_fLa_
+
+4. Configure the msal-web-sample to use your Azure AD tenant
+application.properties
+keytool -genkeypair -alias testCert -keyalg RSA -storetype PKCS12 -keystore keystore.p12 -storepass password
+server.ssl.key-store-type=PKCS12
+server.ssl.key-store=classpath:keystore.p12
+server.ssl.key-store-password=password
+server.ssl.key-alias=testCert
+
+keytool -genkeypair -alias testCert -keyalg RSA -storetype pkcs12 -keystore testCert.p12 -storepass password -validity 3650 -keysize 2048 -dname "CN=my-app, OU=Enterprise, O=Test, L=Unknown, ST=Unknown, C=DE" 
+
+
+
+5. Configure known client applications for service (Java-webapi)
+For a middle tier web API (Java-webapi) to be able to call a downstream web API, the middle tier app needs to be granted the required permissions as well
+Java-webapi ->Manifest
+knownClientApplications = Java_webapp) Application (client) Id =b01b4114-de39-48b1-af96-84cc1d0e67e3
+
+```
+```
+
+
+Step 4: Run the applications
+https://localhost:8443/msal4jsample
+http://localhost:8443/msal4jsample
+```
+
+
+https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=b01b4114-de39-48b1-af96-84cc1d0e67e3&response_type=code&redirect_uri=https://localhost:8443/msal4jsample/secure/aad&response_mode=query&scope=openid%20offline_access%20https%3A%2F%2Fgraph.microsoft.com%2Fmail.read&state=12345
+
+
+
+## reference
+- 1. OAuth 2.0 and OpenID Connect protocols on Microsoft identity platform
+  ```
+  https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols
+	Build mobile and native application with OAuth 2.0
+	Build web apps with OpenID Connect
+	Build single-page apps with the OAuth 2.0 Implicit Flow
+	Build daemons or server-side processes with the OAuth 2.0 client credentials flow
+	Get tokens in a web API with the OAuth 2.0 on-behalf-of Flow
+  ```
+- 2. OAuth 2.0 authorization code flow in Azure Active Directory B2C
+```
+https://docs.microsoft.com/en-us/azure/active-directory-b2c/authorization-code-flow
+```
+
+- 3. 
+```
+https://docs.microsoft.com/en-us/azure/active-directory/develop/app-sign-in-flow
+```
+- 4 . sample app
+```
+https://docs.microsoft.com/en-us/azure/active-directory/develop/sample-v2-code
+```
+
+
+
